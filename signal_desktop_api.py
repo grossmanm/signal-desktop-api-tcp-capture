@@ -20,7 +20,6 @@ class Signal():
     def __init__(self):
         # See if Signal Desktop app is already launched
         pids = subprocess.Popen(["pgrep", "signal-desktop"], stdout=subprocess.PIPE).communicate()[0]
-        print(pids)
         self.pid = str(pids).split('\\n')[0].replace("b'",'')
         if pids != b'':
             self.get_window_id()
@@ -47,9 +46,7 @@ class Signal():
     def get_window_id(self):
         # Find active window
         window_ids = subprocess.Popen(["xdotool", "search", "--pid", self.pid], stdout=subprocess.PIPE).communicate()[0]
-        print(window_ids)
         self.window_id = window_ids.split()[-1].decode("utf-8")
-        print(self.window_id)
 
     def minimize_window(self):
         # Minimize window
@@ -80,7 +77,10 @@ class Signal():
         pyautogui.click(x, y)
 
         # Type a message (single-line only)
+        
         pyautogui.typewrite(message.strip() + '\n', interval=0.05)
+        cur_time = datetime.now()
+        print("Message sent at: ", cur_time)
 
     async def check_for_new_messages(self):
         while True:

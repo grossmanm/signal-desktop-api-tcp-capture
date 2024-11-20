@@ -4,6 +4,9 @@ This repo implements a basic Python API for the [Signal Desktop](https://signal.
 
 Note that there are other options that are more suitable for programmatic usage of Signal (e.g., https://github.com/AsamK/signal-cli). This repository was built primarily to experiment with PyAutoGui and other tools to programmatically control systems originally designed for human interaction.
 
+Malcolm:
+I have included bash code that captures tcp traffic from signal while the messages are being sent
+
 ## Requirements
 
 An installed Signal Desktop app, running an Ubuntu 20.04+ system (this code is specific to that OS).
@@ -21,3 +24,8 @@ python signal_desktop_api.py
 ```
 
 Note that the `signal_conversation_icon.png` image will need to be updated to match the pattern of your particular Signal Desktop setup.
+
+To capture signal traffic:
+```
+sudo ./tcpdump_cap.sh
+```

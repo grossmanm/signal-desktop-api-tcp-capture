@@ -20,6 +20,8 @@ class Signal():
     def __init__(self):
         # See if Signal Desktop app is already launched
         pids = subprocess.Popen(["pgrep", "signal-desktop"], stdout=subprocess.PIPE).communicate()[0]
+        print(pids)
+        self.pid = str(pids).split('\\n')[0].replace("b'",'')
         if pids != b'':
             self.get_window_id()
         else:
@@ -44,8 +46,10 @@ class Signal():
 
     def get_window_id(self):
         # Find active window
-        window_ids = subprocess.Popen(["xdotool", "search", "--name", "Signal"], stdout=subprocess.PIPE).communicate()[0]
+        window_ids = subprocess.Popen(["xdotool", "search", "--pid", self.pid], stdout=subprocess.PIPE).communicate()[0]
+        print(window_ids)
         self.window_id = window_ids.split()[-1].decode("utf-8")
+        print(self.window_id)
 
     def minimize_window(self):
         # Minimize window
@@ -135,4 +139,4 @@ class Signal():
 if __name__ == "__main__":
     S = Signal()
     S.send_message("API: I am now online!")
-    asyncio.run(S.check_for_new_messages())
+#asyncio.run(S.check_for_new_messages())
